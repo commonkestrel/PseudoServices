@@ -1,0 +1,61 @@
+{{define "head" -}}
+    <title>Lexos</title>
+    <style>
+        html {
+            font-family: sans-serif;
+            color: whitesmoke;
+        }
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            text-align: center;
+        }
+    </style>
+{{end}}
+
+{{define "body" -}}
+    <div class="center">
+        <input type="text" placeholder="ISBN" id="isbn">
+        <button id="submit" type="button">Search</button>
+        <p id="error"></p>
+        <p id="lexile"></p>
+        <p id="atos"></p>
+        <p id="ar"></p>
+    </div>
+    <script>
+        document.getElementById("submit").addEventListener("click", (ev) => {
+            const location = window.location
+            if (location.protocol == "https:") {
+                newUri = "wss://"
+            } else {
+                newUri = "ws://"
+            }
+            newUri += location.host + "/ws"
+
+            newUri = "ws://localhost/ws"
+            isbn = document.getElementById("isbn").value
+            document.getElementById("isbn").value = ""
+            ws = new WebSocket(newUri + "?isbn=" + isbn)
+            
+            ws.onmessage = (ev) => {
+                console.log(ev)
+                if (ev.data.startsWith("error:")) {
+                    error = ev.data.slice("error:".length)
+                    if (error == "invalid isbn") {
+                        document.getElementById("error").innerText = "Invalid ISBN!"
+                    } else {
+                        document.getElementById("error").innerText = "Encountered an unexpected error!"
+                    }
+                }
+                data = JSON.parse(ev.data)
+                document.getElementById("lexile").innerText = "Lexile: " + data["lexile"]
+                document.getElementById("atos").innerText = "Atos: " + data["atos"]
+                document.getElementById("ar").innerText = "Ar: " + data["ar"]
+                ws.close()
+            }
+        })
+    </script>
+{{end}}

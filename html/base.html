@@ -1,0 +1,61 @@
+{{define "page"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        {{template "head" . -}}
+        <link rel="icon" href="http://localhost/favicon.ico" />
+        <style>
+            html, body {
+                background-color: rgb(30, 30, 30);
+            }
+
+            #navbar {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 5%;
+                background-color: rgb(75, 75, 75);
+                color: aliceblue;
+            }
+
+            .icon-container {
+                position: relative;
+                height: 5vh;
+                width: 5vh;
+
+                padding-right: calc(0.5vh - 1px);
+                border-right: 2px solid rgb(50, 50, 50);
+            }
+
+            .nav-container {
+                text-align: center;
+
+                padding-right: calc(0.5vh - 1px);
+                padding-left: calc(0.5vh + 1px);
+                border-right: 2px solid rgb(50, 50, 50);
+                border-left: 2px solid rgb(50, 50, 50);
+            }
+
+            #icon {
+                position: relative;
+                top: 10%;
+                left: 10%;
+                height: 80%;
+            }
+        </style>
+        
+    </head>
+    <body>
+        {{template "body" . -}}
+        <div id="navbar">
+            <div class="icon-container">
+                <a href="/">
+                    <img src="static/white.png" id="icon" alt="Home">
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
+
+{{end}}
