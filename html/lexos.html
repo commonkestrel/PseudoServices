@@ -35,8 +35,7 @@
             }
             newUri += location.host + "/ws"
 
-            newUri = "ws://localhost/ws"
-            isbn = document.getElementById("isbn").value
+z            isbn = document.getElementById("isbn").value
             document.getElementById("isbn").value = ""
             ws = new WebSocket(newUri + "?isbn=" + isbn)
             
