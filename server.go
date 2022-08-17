@@ -38,9 +38,12 @@ func main() {
 
     gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
+
     r.Static("/static", "./static")
     r.StaticFile("/favicon.ico", "./static/favicon.ico")
     r.StaticFile("/robots.txt", "./static/robots.txt")
+    r.StaticFile("/sitemap.txt", "./static/sitemap.txt")
+
     r.GET("/", home)
     r.GET("/lexos", lexos)
     r.GET("/ws", ws)
