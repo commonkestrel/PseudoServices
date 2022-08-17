@@ -35,7 +35,8 @@ func home(c *gin.Context) {
 
 func main() {
     defer browser.Close()
-    
+
+    gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
     r.Static("/static", "./static")
     r.StaticFile("/favicon.ico", "./static/favicon.ico")
