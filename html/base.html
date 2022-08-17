@@ -6,6 +6,16 @@
         <link rel="icon" href="/favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <style>
+            html::-webkit-scrollbar {
+                display: none;
+            }
+    
+            html {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;
+            }
+        </style>
     </head>
     <body class="has-text-light">
         {{template "body" . -}}
