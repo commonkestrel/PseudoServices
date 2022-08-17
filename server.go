@@ -38,7 +38,8 @@ func main() {
     
     r := gin.Default()
     r.Static("/static", "./static")
-    r.StaticFile("favicon.ico", "./static/favicon.ico")
+    r.StaticFile("/favicon.ico", "./static/favicon.ico")
+    r.StaticFile("/robots.txt", "./static/robots.txt")
     r.GET("/", home)
     r.GET("/lexos", lexos)
     r.GET("/ws", ws)
