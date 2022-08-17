@@ -1,15 +1,20 @@
 {{define "head" -}}
     <title>Lexos</title>
     <style>
-        html {
-            font-family: sans-serif;
-            color: whitesmoke;
+        html::-webkit-scrollbar {
+            display: none;
         }
+
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;
+        }
+
         .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 45vh;
+            transform: translateY(-50%);
+
+            width: 40vw !important;
 
             text-align: center;
         }
@@ -17,44 +22,56 @@
 {{end}}
 
 {{define "body" -}}
-    <div class="center">
-        <input type="text" placeholder="ISBN" id="isbn">
-        <button id="submit" type="button">Search</button>
-        <p id="error"></p>
-        <p id="lexile"></p>
-        <p id="atos"></p>
-        <p id="ar"></p>
+    <div class="center container">
+        <input type="text" placeholder="ISBN" id="isbn" class="input my-1 has-text-centered">
+        <button id="submit" class="button is-primary is-outlined my-1" type="button">Search</button>
+        <p id="error" class="my-1"></p>
+        <p id="lexile" class="my-1"></p>
+        <p id="atos" class="my-1"></p>
+        <p id="ar" class="my-1"></p>
     </div>
     <script>
         document.getElementById("submit").addEventListener("click", (ev) => {
-            const location = window.location
-            if (location.protocol == "https:") {
-                newUri = "wss://"
-            } else {
-                newUri = "ws://"
-            }
-            newUri += location.host + "/ws"
+            document.getElementById("lexile").innerText = ""
+            document.getElementById("atos").innerText = ""
+            document.getElementById("ar").innerText = ""
+            document.getElementById("error").innerText = ""
 
-            isbn = document.getElementById("isbn").value
-            document.getElementById("isbn").value = ""
-            ws = new WebSocket(newUri + "?isbn=" + isbn)
+            const location = window.location;
+            if (location.protocol == "https:") {
+                newUri = "wss://";
+            } else {
+                newUri = "ws://";
+            }
+            newUri += location.host + "/ws";
+
+            isbn = document.getElementById("isbn").value;
+            if (isbn == "" ) {
+                document.getElementById("error").innerText = "ISBN Required!";
+                return;
+            }
+            document.getElementById("isbn").value = "";
+            document.getElementById("submit").classList.add("is-loading");
+            ws = new WebSocket(newUri + "?isbn=" + isbn);
             
             ws.onmessage = (ev) => {
-                console.log(ev)
+                console.log(ev.data);
+                document.getElementById("submit").classList.remove("is-loading");
                 if (ev.data.startsWith("error:")) {
-                    error = ev.data.slice("error:".length)
+                    
+                    error = ev.data.slice("error:".length);
                     if (error == "invalid isbn") {
-                        document.getElementById("error").innerText = "Invalid ISBN!"
+                        document.getElementById("error").innerText = "Invalid ISBN!";
                     } else {
-                        document.getElementById("error").innerText = "Encountered an unexpected error!"
+                        document.getElementById("error").innerText = "Encountered an unexpected error!";
                     }
                 }
-                data = JSON.parse(ev.data)
-                document.getElementById("lexile").innerText = "Lexile: " + data["lexile"]
-                document.getElementById("atos").innerText = "Atos: " + data["atos"]
-                document.getElementById("ar").innerText = "Ar: " + data["ar"]
-                ws.close()
+                data = JSON.parse(ev.data);
+                document.getElementById("lexile").innerText = "Lexile: " + data["lexile"];
+                document.getElementById("atos").innerText = "Ar Level: " + data["atos"];
+                document.getElementById("ar").innerText = "Ar Points: " + data["ar"];
+                ws.close();
             }
-        })
+        });
     </script>
 {{end}}

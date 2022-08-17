@@ -1,18 +1,13 @@
 {{define "page"}}
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top">
+<html class="has-navbar-fixed-top is-dark has-background-black-bis">
     <head>
         {{template "head" . -}}
         <link rel="icon" href="/favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-        <style>
-            html, body {
-                background-color: rgb(15, 15, 15);
-            }
-        </style>
     </head>
-    <body>
+    <body class="has-text-light">
         {{template "body" . -}}
         <nav class="navbar is-fixed-top is-dark" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
