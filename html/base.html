@@ -1,6 +1,6 @@
 {{define "page"}}
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top is-dark has-background-black-bis">
+<html class="is-dark has-background-black-bis">
     <head>
         {{template "head" . -}}
         <link rel="icon" href="/favicon.ico">
@@ -18,11 +18,11 @@
         </style>
     </head>
     <body class="has-text-light">
-        {{template "body" . -}}
-        <nav class="navbar is-fixed-top is-dark" role="navigation" aria-label="main navigation">
+        
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a href="/" class="navbar-item">
-                    <img src="/static/white.png" id="icon" alt="Home">
+                    <img src="/static/pseudowhite.png" id="icon" alt="Home">
                 </a>
             </div>
             <div class="navbar-start">
@@ -31,6 +31,7 @@
                 </a>
             </div>
         </nav>
+        {{template "body" . -}}
     </body>
 </html>
 

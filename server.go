@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+    "log"
 	"html/template"
 	"net/http"
 	"os"
@@ -21,17 +21,19 @@ func home(c *gin.Context) {
     tmpl, err := template.New("page").ParseFiles("html/base.html", "html/home.html")
     if err != nil {
         c.Status(http.StatusInternalServerError)
+        log.Println(err)
         return
     }
     var projects []Project
     jsonFile, err := os.Open("static/projects.json")
     if err != nil {
         c.Status(http.StatusInternalServerError)
+        log.Println(err)
         return
     }
     decode := json.NewDecoder(jsonFile)
     decode.Decode(&projects)
-    tmpl.Execute(c.Writer, nil)
+    tmpl.Execute(c.Writer, projects)
 }
 
 func main() {
@@ -49,7 +51,7 @@ func main() {
     r.GET("/lexos", lexos)
     r.GET("/ws", ws)
     
-    fmt.Println("Starting server on port 80")
+    log.Println("Starting server on port 80")
     err := r.Run(":80")
     if err != nil {
         panic(err)
