@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -47,7 +48,8 @@ func main() {
     r.GET("/", home)
     r.GET("/lexos", lexos)
     r.GET("/ws", ws)
-
+    
+    fmt.Println("Starting server on port 80")
     err := r.Run(":80")
     if err != nil {
         panic(err)
