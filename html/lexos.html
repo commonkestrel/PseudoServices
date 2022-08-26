@@ -1,6 +1,12 @@
 {{define "head" -}}
     <title>Lexos</title>
     <style>
+        #description {
+            transform: translateY(-25%);
+            font-size: large;
+            text-align: center;
+        }
+
         .center {
             top: 45vh;
             transform: translateY(-50%);
@@ -14,6 +20,8 @@
 
 {{define "body" -}}
     <div class="center container">
+        <p id="description" class="container is-max-desktop">Lexos is a tool to retrive the Lexile level, AR level, and AR points from a book's ISBN. Simply input the ISBN and click "Search", and it will retrieve the data. This can take a couple of seconds, but it is working, I promise! If this shows that the book is not found, it is possible that the book is actually in the system, just not under that ISBN, so you may have to use their dedicated search: <a href="https://www.arbookfind.com" target="_blank">AR</a>, <a href="https://hub.lexile.com/find-a-book/search" target="_blank">Lexile</a></p>
+
         <input type="text" placeholder="ISBN" id="isbn" class="input my-1 has-text-centered">
         <button id="submit" class="button is-primary is-outlined my-1" type="button">Search</button>
         <p id="error" class="my-1"></p>
