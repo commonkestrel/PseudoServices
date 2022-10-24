@@ -38,7 +38,7 @@ var (
     pw *playwright.Playwright
     browser playwright.Browser
 
-    invalidIsbn = errors.New("invalid isbn")
+    errInvalidIsbn = errors.New("invalid isbn")
     upgrader = websocket.Upgrader{
         CheckOrigin: func(r *http.Request) bool {
             return true
@@ -59,7 +59,7 @@ func get(isbn string) (Result, error) {
     isbn = strings.ReplaceAll(isbn, "-", "")
     valid := isbnpkg.Validate(isbn)
     if !valid {
-        return Result{}, invalidIsbn
+        return Result{}, errInvalidIsbn
     }
 
     page, err := browser.NewPage()

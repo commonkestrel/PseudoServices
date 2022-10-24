@@ -46,6 +46,7 @@ func main() {
     r.StaticFile("/favicon.ico", "./static/favicon.ico")
     r.StaticFile("/robots.txt", "./static/robots.txt")
     r.StaticFile("/sitemap.txt", "./static/sitemap.txt")
+    r.StaticFile("/wasm", "./html/host.html")
 
     r.GET("/", home)
     r.GET("/lexos", lexos)
