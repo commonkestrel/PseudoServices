@@ -36,6 +36,16 @@ func home(c *gin.Context) {
     tmpl.Execute(c.Writer, projects)
 }
 
+func gis(c *gin.Context) {
+    tmpl, err := template.New("page").ParseFiles("html/base.html", "html/gis.html")
+    if err != nil {
+        c.Status(http.StatusInternalServerError)
+        log.Println(err)
+        return
+    }
+    tmpl.Execute(c.Writer, nil)
+}
+
 func main() {
     defer browser.Close()
 
@@ -51,6 +61,7 @@ func main() {
     r.GET("/", home)
     r.GET("/lexos", lexos)
     r.GET("/ws", ws)
+    r.GET("/gis", gis)
     
     log.Println("Starting server on port 80")
     err := r.Run(":80")

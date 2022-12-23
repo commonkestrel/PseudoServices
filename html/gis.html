@@ -1,0 +1,388 @@
+{{define "head" -}}
+    <style>
+        .logo {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+        }
+
+        header {
+            font-size: 5vh;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .top {
+            transform: translate(-50%, 20%) scale(1);
+            background-color: #333333;
+            z-index: 2;
+        }
+
+        .top:hover {
+            transform: translate(-50%, 16%) scale(1.02);
+        }
+
+        .middle {
+            transform: translate(-50%, 11%) scale(95%);
+            background-color: #272727;
+            z-index: 1;
+        }
+
+        .middle:hover {
+            transform: translate(-50%, 9%) scale(97%);
+        }
+
+        .bottom {
+            transform: translate(-50%, 3.5%) scale(88%);
+            background-color: #222222;
+            z-index: 0;
+        }
+
+        .bottom:hover {
+            transform: translate(-50%, 0%) scale(90%);
+        }
+
+        .logo-container {
+            position: absolute;
+            padding-left: 2.5em;
+            padding-right: 2.5em;
+            height: min(22em, 50.2vw);
+            width: min(35em, 80vw);
+            text-align: center;
+            border-radius: 8px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        #stack {
+            width: 0px;
+            position: relative;
+            left: 50%;
+            transform: translate(0%, 50%);
+        }
+
+
+        #arrows {
+            position: relative;
+            width: 4em;
+        }
+
+        .arrow {
+            transform: translateY(0%);
+            transition: 0.3s;
+        }
+
+        #shift-up {
+            margin-bottom: 0.5em;
+        }
+
+        #shift-up:hover {
+            transform: translateY(-25%);
+        }
+
+        #shift-down {
+            margin-top: 0.5em;
+            transform: scaleY(-1);
+        }
+
+        #shift-down:hover {
+            transform: translateY(15%) scaleY(-1);
+        }
+
+        #after {
+            position:relative;
+            text-align: center;
+            left: 50%;
+            transform: translateX(-50%);
+            top: min(28em, 65vw);
+        }
+
+        a.image {
+            transition: 0.2s;
+        }
+
+        a.image:hover {
+            transform: scale(1.1);
+        }
+
+        .is-right {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        @media screen and (orientation: landscape) {
+            #after { width: 50em; }
+            #arrows {
+                top: 12.5em;
+                right: -20em;
+            }
+        }
+
+        @media screen and (orientation: portrait) {
+            #after { width: 90%; }
+            #arrows {
+                top: min(25em, 56vw);
+                max-height: 3em;
+                display: flex;
+                text-align: center;
+                transform: translateY(50%);
+                right: 3.5em;
+            }
+            #shift-down {
+                transform: translateY(-10%) scale(-1);
+            }
+            #shift-down:hover {
+                transform: scale(-1.2);
+            }
+            #shift-up:hover {
+                transform: scale(1.2);
+            }
+            .arrow {
+                flex: 30%;
+            }
+            .media-right {
+                right: -40px;
+            }
+        }
+    </style>
+{{end}}
+
+{{define "body" -}}
+    <header class="has-text-light">Google Image Search <small>(<em>GIS</em>)</small></header>
+    <div id="python-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-background-grey-darker">
+                <p class="modal-card-title has-text-light"><strong class="has-text-light">GoogleImageScraper</strong></p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body has-background-grey-darker has-text-light">
+                <p class="has-text-centered">
+                    The very first of its' kind, GoogleImageScraper was programmed in Python and is by far the worst version. I had just learned about classes while making it, and decided to go with a very strange structure that is pretty inefficient in memory, time, and power. Nevertheless, it does have some very useful features, such as:
+                </p>
+                <div class="content">
+                    <ul>
+                        <li>Various search and download arguments to refine your search</li>
+                        <li>Fetching the standalone URLs of images without downloading</li>
+                        <li>Fetching the source and thumbnail if needed in an object</li>
+                        <li>Downloading images to a specific directory</li>
+                        <li>Descriptive error names</li>
+                    </ul>
+                </div>
+            </section>
+            <footer class="modal-card-foot has-background-grey-darker">
+                <a href="https://github.com/jibble330/GoogleImageScraper/" target="_blank" class="image is-32x32">
+                    <img src="/static/github-mark-white.svg">
+                </a>
+                <a href="https://pypi.org/project/GoogleImageScraper/" target="_blank" class="is-right image is-32x32">
+                    <img src="/static/pypi.svg" style="float: right;">
+                </a>    
+            </footer>
+        </div>
+    </div>
+
+    <div id="go-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-background-grey-darker">
+                <p class="modal-card-title has-text-light"><strong class="has-text-light">imagesearch</strong></p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body has-background-grey-darker has-text-light">
+                <p class="has-text-centered">
+                    <em>imagesearch</em> is the second iteration, built in Go. Since I comitted to doing this project in every new language, I knew I had to make the program much more streamlined, and I definitly succeeded. While it isn't perfect, this version is much more refined than <em>GoogleImageScraper</em>, and contains many improvements, including:
+                </p>
+                <div class="content">
+                    <ul>
+                        <li>Cleaner and more readable source code</li>
+                        <li>Better documentation and comments</li>
+                        <li>Better error handling</li>
+                        <li>Constants instead of a hashmap for options</li>
+                        <li>Better name for ease of use</li>
+                    </ul>
+                </div>
+            </section>
+            <footer class="modal-card-foot has-background-grey-darker">
+                <a href="https://github.com/jibble330/imagesearch/" target="_blank" class="image is-32x32">
+                    <img src="/static/github-mark-white.svg">
+                </a>
+                <a href="https://pypi.org/project/GoogleImageScraper/" target="_blank" class="is-right image is-32x32">
+                    <img src="/static/go-logo.svg">
+                </a>
+            </footer>
+        </div>
+    </div>
+
+    <div id="rust-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-background-grey-darker">
+                <p class="modal-card-title has-text-light"><strong class="has-text-light">image_search</strong></p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body has-background-grey-darker has-text-light">
+                <p class="has-text-centered">
+                    <em>image_search</em> is the most recent version of Google Image Search, and is the most advanced version yet. Some major improvements over the other two include:
+                    
+                </p>
+                <div class="content">
+                    <ul>
+                        <li><em>Async</em> by default, with an optional blocking API thanks to Rust's <em>features</em></li>
+                        <li>Concurrent image downloading to drastically reduce the time spent waiting for http requests</li>
+                        <li><em>Enums</em> and function chaining for options for the greatest ease of use so far</li>
+                        <li>Retrieves width and height of image as well</li>
+                        <li>Supports downloading thumbnails instead of full-size images.</li>
+                        <li>More extensive options</li>
+                        <li>Better error handling</li>
+                        
+                    </ul>
+                </div>
+            </section>
+            <footer class="modal-card-foot has-background-grey-darker">
+                <a href="https://github.com/jibble330/image_search/" target="_blank" class="image is-32x32">
+                    <img src="/static/github-mark-white.svg">
+                </a>
+                <a href="https://crates.io/crates/image_search/" target="_blank" class="is-right image is-32x32">
+                    <img src="/static/cargo.svg">
+                </a>
+            </footer>
+        </div>
+    </div>
+
+    <div id="stack">
+        <div id="python" class="logo-container top">
+            <a id="python-open" class="frame"><img src="/static/python.png" class="logo"/></a>
+        </div>
+        <div id="go" class="logo-container middle">
+            <a id="go-open" class="frame"><img src="/static/go.png" class="logo"/></a>
+        </div>
+        <div id="rust" class="logo-container bottom">
+            <a id="rust-open" class="frame"><img src="/static/rust-white.png" class="logo"/></a>
+        </div>
+        <div id="arrows" align="right">
+            <img src="/static/stack-arrow.svg" class="arrow" id="shift-up"/>
+            <img src="/static/stack-arrow.svg" class="arrow" id="shift-down"/>
+        </div>
+    </div>
+    <div id="after">
+        <p class="has-text-light">
+            <strong class="has-text-light">Google Image Scraper</strong> is a project that I've been working on for some time. 
+            I started this project when I was making a Discord bot in Python, and needed a way to search Google Images.
+            The only way to do this at the time was <a href="https://www.github.com/joeclinton1/google-images-download" target="_blank">google-images-download</a> by <a href="https://w;ww.github.com/hardikvasa">hardikvasa</a>, and maintained by <a href="https://www.github.com/joeclinton1">joeclinton1</a></br></br>
+            This was an amazing and impressive project, but it had no way of just retrieving the URLs of the images, which is what I needed. 
+            Unable to find a good way of doing this, I set out on a quest to create something that had this exact functionality, which I believe I achieved.
+            After that, it's been a goal of mine to create a way to search Google Images in every new programming language I learn.
+        </p>
+    </div>
+
+    <script>
+        const up_arrow = document.getElementById("shift-up");
+        const down_arrow = document.getElementById("shift-down");
+
+        const Arrow = {
+            None: 0,
+            Up: 1,
+            Down: 2
+        };
+        let first = Arrow.None;
+
+        const backward = () => {
+            const top = document.getElementsByClassName("top")[0];
+            const middle = document.getElementsByClassName("middle")[0];
+            const bottom = document.getElementsByClassName("bottom")[0];
+            
+            top.classList.remove("top");
+            top.classList.add("middle");
+            
+            middle.classList.remove("middle");
+            middle.classList.add("bottom");
+
+            bottom.classList.remove("bottom");
+            bottom.classList.add("top");
+        }
+
+        const forward = () => {
+            const top = document.getElementsByClassName("top")[0];
+            const middle = document.getElementsByClassName("middle")[0];
+            const bottom = document.getElementsByClassName("bottom")[0];
+            
+            top.classList.remove("top");
+            top.classList.add("bottom");
+            
+            middle.classList.remove("middle");
+            middle.classList.add("top");
+
+            bottom.classList.remove("bottom");
+            bottom.classList.add("middle");
+        }
+         
+        up_arrow.addEventListener("click", () => {
+            if (first == Arrow.Up) {
+                forward();
+            }
+            if (first == Arrow.Down) { 
+                backward();
+            }
+            if (first == Arrow.None) {
+                first = Arrow.Up;
+                forward();
+            }
+            
+        });
+
+        down_arrow.addEventListener("click", () => {
+            if (first == Arrow.Up) {
+                backward();
+            }
+            if (first == Arrow.Down) { 
+                forward();
+            }
+            if (first == Arrow.None) {
+                first = Arrow.Down;
+                forward();
+            }
+            
+        });
+
+        const openModal = ($em) => {
+            $em.classList.add("is-active");
+        }
+
+        const closeModal = ($em) => {
+            $em.classList.remove("is-active");
+        }
+
+        const closeModals = () => {
+            (document.querySelectorAll(".modal") || []).forEach(($modal) => {
+                $modal.classList.remove("is-active");
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            const e = event || window.event;
+        
+            if (e.keyCode === 27) { // Escape key
+              closeModals();
+            }
+          });
+
+        (document.querySelectorAll('.modal-close, .delete, .modal-background') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+        
+            $close.addEventListener('click', () => {
+              closeModal($target);
+            });
+        });
+
+        document.getElementById("python-open").addEventListener("click", () => {
+            openModal(document.getElementById("python-modal"));
+        });
+        document.getElementById("go-open").addEventListener("click", () => {
+            openModal(document.getElementById("go-modal"));
+        });
+        document.getElementById("rust-open").addEventListener("click", () => {
+            openModal(document.getElementById("rust-modal"));
+        });
+    </script>
+{{end}}
