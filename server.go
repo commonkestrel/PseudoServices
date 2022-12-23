@@ -63,8 +63,8 @@ func main() {
     r.GET("/ws", ws)
     r.GET("/gis", gis)
     
-    log.Println("Starting server on port 80")
-    err := r.Run(":80")
+    log.Println("Starting server on port 8080")
+    err := r.RunTLS(":8080", "./keys/pseudoservices_com.crt", "./keys/pseudoservices_com.key") // Private CSR keys
     if err != nil {
         panic(err)
     }
