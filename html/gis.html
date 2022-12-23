@@ -112,6 +112,17 @@
             margin-right: 0;
         }
 
+        .version {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-8%);
+            transition: opacity 150ms;
+        }
+
+        .fade {
+            opacity: 1;
+        }
+
         @media screen and (orientation: landscape) {
             #after { width: 50em; }
             #arrows {
@@ -127,17 +138,20 @@
                 max-height: 3em;
                 display: flex;
                 text-align: center;
-                transform: translateY(50%);
+                transform: translate(-50%, 50%);
                 right: 3.5em;
             }
             #shift-down {
-                transform: translateY(-10%) scale(-1);
+                transform: scale(-1);
             }
             #shift-down:hover {
-                transform: scale(-1.2);
+                transform: translateY(5%) scale(-1.05);
             }
             #shift-up:hover {
-                transform: scale(1.2);
+                transform: scale(1.05);
+            }
+            .version {
+                white-space: pre;
             }
             .arrow {
                 flex: 30%;
@@ -263,6 +277,7 @@
         </div>
         <div id="arrows" align="right">
             <img src="/static/stack-arrow.svg" class="arrow" id="shift-up"/>
+            <small><center id="version" class="has-text-grey version fade">Version: 1<br>Python</center></small>
             <img src="/static/stack-arrow.svg" class="arrow" id="shift-down"/>
         </div>
     </div>
@@ -284,9 +299,36 @@
         const Arrow = {
             None: 0,
             Up: 1,
-            Down: 2
+            Down: 2,
         };
         let first = Arrow.None;
+
+        const Language  = {
+            Python: 0,
+            Go: 1,
+            Rust: 2,
+        };
+        let current = Language.Python;
+
+        const updateVersion = () => {
+            const el = document.getElementById("version");
+            el.classList.remove("fade");
+            setTimeout(() => {
+                el.textContent = "Version: " + (current+1) + "\n" + langFromVal(current);
+                el.classList.add("fade");
+            }, 150)
+        }
+
+        const langFromVal = (val) => {
+            switch (val) {
+                case 0:
+                    return "Python"
+                case 1:
+                    return "Go"
+                case 2:
+                    return "Rust"
+            }
+        }
 
         const backward = () => {
             const top = document.getElementsByClassName("top")[0];
@@ -301,6 +343,12 @@
 
             bottom.classList.remove("bottom");
             bottom.classList.add("top");
+
+            current = (current-1)%3;
+            if (current == -1) {
+                current = Language.Rust;
+            }
+            updateVersion();
         }
 
         const forward = () => {
@@ -316,6 +364,9 @@
 
             bottom.classList.remove("bottom");
             bottom.classList.add("middle");
+
+            current = (current+1)%3;
+            updateVersion();
         }
          
         up_arrow.addEventListener("click", () => {
