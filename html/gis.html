@@ -119,17 +119,11 @@
             transition: opacity 150ms;
         }
 
-        .fade {
-            opacity: 1;
-        }
-
         .modal {
             opacity: 0;
-            transition: opacity 200ms;
         }
 
-        .modal.is-active {
-            transition: opacity 200ms;
+        .fade {
             opacity: 1;
         }
 
@@ -175,7 +169,7 @@
 
 {{define "body" -}}
     <header class="has-text-light">Google Image Search <small>(<em>GIS</em>)</small></header>
-    <div id="python-modal" class="modal">
+    <div id="python-modal" class="modal fade">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head has-background-grey-darker">
