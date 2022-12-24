@@ -121,6 +121,7 @@
 
         .modal {
             opacity: 0;
+            transition: opacity 200ms;
         }
 
         .fade {
@@ -169,7 +170,7 @@
 
 {{define "body" -}}
     <header class="has-text-light">Google Image Search <small>(<em>GIS</em>)</small></header>
-    <div id="python-modal" class="modal fade">
+    <div id="python-modal" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head has-background-grey-darker">
@@ -403,10 +404,14 @@
 
         const openModal = ($em) => {
             $em.classList.add("is-active");
+            $em.classList.add("fade");
         }
 
         const closeModal = ($em) => {
-            $em.classList.remove("is-active");
+            $em.classList.remove("fade");
+            setTimeout(() => {
+                $em.classList.remove("is-active");
+            }, 150);
         }
 
         const closeModals = () => {
