@@ -404,7 +404,10 @@
 
         const openModal = ($em) => {
             $em.classList.add("is-active");
-            $em.classList.add("fade");
+            setTimeout(() => {
+                $em.classList.add("fade");
+            }, 1000);
+            
         }
 
         const closeModal = ($em) => {
