@@ -71,7 +71,7 @@ func main() {
         if err := http.ListenAndServe(":80", http.HandlerFunc(redirectToTls)); err != nil {
             log.Fatalf("ListenAndServe error %v", err)
         }
-    }
+    }()
 
     log.Println("Starting server on port 443")
 
