@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	//"github.com/gorilla/websocket"
+	"github.com/unrolled/secure"
 )
 
 type Project struct {
@@ -49,8 +49,25 @@ func gis(c *gin.Context) {
 func main() {
     defer browser.Close()
 
+    secureFunc := func() gin.HandlerFunc {
+        return func(c *gin.Context) {
+            secureMiddleware := secure.New(secure.Options{
+                SSLRedirect: true,
+            })
+            err := secureMiddleware.Process(c.Writer, c.Request)
+
+            // If there was an error, do not continue.
+            if err != nil {
+                return
+            }
+
+            c.Next()
+        }
+    }()
+
     gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
+    r.Use(secureFunc)
 
     r.Static("/static", "./static")
     r.StaticFile("/favicon.ico", "./static/favicon.ico")
