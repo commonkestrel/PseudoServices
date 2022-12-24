@@ -404,10 +404,9 @@
 
         const openModal = ($em) => {
             $em.classList.add("is-active");
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 $em.classList.add("fade");
-            }, 1000);
-            
+            });
         }
 
         const closeModal = ($em) => {
