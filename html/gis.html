@@ -123,6 +123,15 @@
             opacity: 1;
         }
 
+        .modal {
+            opacity: 0;
+            transition: 200ms;
+        }
+
+        .modal.is-active {
+            opacity: 2;
+        }
+
         @media screen and (orientation: landscape) {
             #after { width: 50em; }
             #arrows {
