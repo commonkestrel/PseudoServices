@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/unrolled/secure"
 )
 
 type Project struct {
@@ -46,28 +45,15 @@ func gis(c *gin.Context) {
     tmpl.Execute(c.Writer, nil)
 }
 
+func redirectToTls(w http.ResponseWriter, r *http.Request) {
+    http.Redirect(w, r, "https://" + r.Host + r.RequestURI, http.StatusMovedPermanently)
+}
+
 func main() {
     defer browser.Close()
 
-    secureFunc := func() gin.HandlerFunc {
-        return func(c *gin.Context) {
-            secureMiddleware := secure.New(secure.Options{
-                SSLRedirect: true,
-            })
-            err := secureMiddleware.Process(c.Writer, c.Request)
-
-            // If there was an error, do not continue.
-            if err != nil {
-                return
-            }
-
-            c.Next()
-        }
-    }()
-
     gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
-    r.Use(secureFunc)
 
     r.Static("/static", "./static")
     r.StaticFile("/favicon.ico", "./static/favicon.ico")
@@ -80,7 +66,15 @@ func main() {
     r.GET("/ws", ws)
     r.GET("/gis", gis)
     
+    log.Println("Starting redirect server on port 80")
+    go func() {
+        if err := http.ListenAndServe(":80", http.HandlerFunc(redirectToTls)); err != nil {
+            log.Fatalf("ListenAndServe error %v", err)
+        }
+    }
+
     log.Println("Starting server on port 443")
+
     err := r.RunTLS(":443", "./keys/pseudoservices_com.crt", "./keys/pseudoservices_com.key") // Private CSR keys
     if err != nil {
         panic(err)
